@@ -17,8 +17,7 @@ async function generalScrapGoogleFlights(placeFrom, placeTo, dateFrom, dateTo) {
 
 async function setScrapingConditions() {
     const browser = await puppeteer.launch({
-        headless: false 
-        // change to "new"
+        headless: "new" 
     })
 
     const page = await browser.newPage()
@@ -77,8 +76,8 @@ async function writeFlightDates(page, dateFrom, dateTo) {
 }
 
 async function checkIfChangeDateOption(page) {
-    const [changeDateOption] = await page.$x("//button[@class='I0Kcef']");
-
+    await new Promise(r => setTimeout(r, 1000))
+    const [changeDateOption] = await page.$x("//*[@class='I0Kcef']");
     if(changeDateOption) {
         await changeDateOption.click()
     }
@@ -91,7 +90,7 @@ async function orderByPrice(page) {
     await orderBy.click()
 
     const [price] = await page.$x("//li//span[text()='Precio']")
-    await new Promise(r => setTimeout(r, 500))
+    await new Promise(r => setTimeout(r, 1500))
     await price.click()
 }
 
